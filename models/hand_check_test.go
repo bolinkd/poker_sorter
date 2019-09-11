@@ -40,3 +40,29 @@ func Test_hasHighCard_Invalid(t *testing.T) {
 	ok, _ := cards_InvalidHighCard.hasHighCard()
 	assert.False(ok, "Should return no valid cards")
 }
+
+func Test_hasMatchingSuit_Valid(t *testing.T) {
+	assert := assert.New(t)
+	ok, matchingCards := cards_ValidMatchingSuits.hasMatchingSuit()
+	assert.True(ok, "Should return that there is a matching suit")
+	assert.Equal(matchingCards[0].Suit, Heart, "Should return the matching suit of Hearts")
+}
+
+func Test_hasMatchingSuit_Invalid(t *testing.T) {
+	assert := assert.New(t)
+	ok, _ := cards_MatchingSuitsMissingOne.hasMatchingSuit()
+	assert.False(ok, "Should return that there is no matching suit")
+}
+
+func Test_hasSequence_Valid(t *testing.T) {
+	assert := assert.New(t)
+	ok, sequenceCards := cards_SequenceValid.hasSequence()
+	assert.True(ok, "Should return that there is a sequence")
+	assert.Equal(sequenceCards[len(sequenceCards)-1].Value, Five, "Should return the cards sorted with max card being a 5")
+}
+
+func Test_hasSequence_Invalid(t *testing.T) {
+	assert := assert.New(t)
+	ok, _ := cards_SequenceInvalid.hasSequence()
+	assert.False(ok, "Should return that there is no sequence")
+}
