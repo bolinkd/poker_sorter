@@ -1,7 +1,6 @@
 package generation
 
 import (
-	// "fmt"
 	"github.com/bolinkd/poker_sorter/models"
 	"math/rand"
 	"time"
@@ -58,11 +57,11 @@ func getRandomNumbers(count int, min int, max int) []int {
 	return indexes
 }
 
-func GetHand(deck *models.Cards) (models.Cards, error) {
+func GetHand(deck *models.Cards) (models.Hand, error) {
 	indexes := getRandomNumbers(5, 0, len(*deck)-1)
 	cards := models.Cards{}
 	for _, idx := range indexes {
 		cards = append(cards, (*deck)[idx])
 	}
-	return cards, nil
+	return models.NewHand(cards), nil
 }
