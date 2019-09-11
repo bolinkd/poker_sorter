@@ -6,7 +6,6 @@ type Value int
 
 const (
 	UnknownValue Value = iota
-	One
 	Two
 	Three
 	Four
@@ -19,10 +18,13 @@ const (
 	Jack
 	Queen
 	King
+	Ace
 )
 
 func (v Value) toString() string {
 	switch v {
+	case Ace:
+		return "A"
 	case Jack:
 		return "J"
 	case Queen:

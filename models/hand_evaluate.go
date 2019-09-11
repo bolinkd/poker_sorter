@@ -18,7 +18,7 @@ func (h *Hand) Evaluate() {
 		isRoyal := false
 		isFlush := false
 		// Check if royal (ie: Last card is King)
-		if h.Cards[len(h.Cards)-1].Value == King {
+		if h.Cards[len(h.Cards)-1].Value == Ace {
 			isRoyal = true
 		}
 
@@ -27,7 +27,6 @@ func (h *Hand) Evaluate() {
 			isFlush = true
 		}
 
-		// assign accordingly
 		if isRoyal && isFlush {
 			h.updateBestHand(RoyalFlush, sequentialCards)
 			return

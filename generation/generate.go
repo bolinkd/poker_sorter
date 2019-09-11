@@ -17,7 +17,7 @@ func GenerateDeck() models.Cards {
 	deck := models.Cards{}
 
 	for suit := models.Heart; suit <= models.Spade; suit++ {
-		for value := models.One; value <= models.King; value++ {
+		for value := models.Two; value <= models.Ace; value++ {
 			deck = append(deck, &models.Card{
 				Suit:  suit,
 				Value: value,
@@ -26,10 +26,6 @@ func GenerateDeck() models.Cards {
 	}
 
 	return deck
-}
-
-func ShuffleDeck() {
-
 }
 
 func valueInSlice(val int, list []int) bool {

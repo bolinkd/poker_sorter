@@ -58,7 +58,7 @@ func Test_hasSequence_Valid(t *testing.T) {
 	assert := assert.New(t)
 	ok, sequenceCards := cards_SequenceValid.hasSequence()
 	assert.True(ok, "Should return that there is a sequence")
-	assert.Equal(sequenceCards[len(sequenceCards)-1].Value, Five, "Should return the cards sorted with max card being a 5")
+	assert.Equal(sequenceCards[len(sequenceCards)-1].Value, Six, "Should return the cards sorted with max card being a 6")
 }
 
 func Test_hasSequence_Invalid(t *testing.T) {
