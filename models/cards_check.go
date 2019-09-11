@@ -53,7 +53,18 @@ func (cs Cards) hasSequence() (bool, Cards) {
 	})
 
 	seqVal := cs[0].Value
-	for _, card := range cs[1:] {
+	cardList := cs[1:]
+
+	// If there is a two and an Ace it can count as a straight
+	// TODO: Currently not working
+	/*
+		if seqVal == Two && cs[len(cs)-1].Value == Ace {
+			cardList = cs[1 : len(cs)-1]
+			cs = append(Cards{cs[len(cs)-1]}, cs[1:]...)
+		}
+	*/
+
+	for _, card := range cardList {
 		if card.Value == seqVal+1 {
 			seqVal++
 		} else {

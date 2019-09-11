@@ -222,3 +222,26 @@ var cards_RoyalFlush = Cards{
 		Suit:  Heart,
 	},
 }
+
+var cards_LowStraight = Cards{
+	&Card{
+		Value: Ace,
+		Suit:  Diamond,
+	},
+	&Card{
+		Value: Two,
+		Suit:  Spade,
+	},
+	&Card{
+		Value: Three,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Four,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Five,
+		Suit:  Heart,
+	},
+}
