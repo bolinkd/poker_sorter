@@ -6,40 +6,37 @@ import (
 	"github.com/bolinkd/poker_sorter/models"
 )
 
+func CompareHands(hand1 models.Hand, hand2 models.Hand) {
+	better, err := hand1.IsBetterThan(hand2)
+	if err != nil {
+		fmt.Printf("Hand 1's %v is the same as Hand 2's %v\n", hand1.BestHandType.ToString(), hand2.BestHandType.ToString())
+		return
+	}
+
+	if better {
+		fmt.Printf("Hand 1's %v beats Hand 2's %v\n", hand1.BestHandType.ToString(), hand2.BestHandType.ToString())
+	} else {
+		fmt.Printf("Hand 2's %v beats Hand 1's %v\n", hand2.BestHandType.ToString(), hand1.BestHandType.ToString())
+	}
+}
+
 func main() {
 	deck := generation.GenerateDeck()
-	// fmt.Println(deck.ToString())
 
-	hand, err := generation.GetHand(&deck)
+	hand1, err := generation.GetHand(&deck)
 	if err != nil {
-		// TODO: ERROR
+		return
 	}
-	fmt.Println(hand.Cards.ToString())
-	err = hand.Evaluate()
-	fmt.Println(hand.BestHand.ToString(), hand.BestHandType)
+	fmt.Println("Hand 1: " + hand1.Cards.ToString())
+	hand1.Evaluate()
 
-	hand2 := models.NewHand(models.Cards{
-		&models.Card{
-			1, 1,
-		},
-		&models.Card{
-			1, 2,
-		},
-		&models.Card{
-			1, 3,
-		},
-		&models.Card{
-			1, 4,
-		},
-		&models.Card{
-			1, 5,
-		},
-	})
+	hand2, err := generation.GetHand(&deck)
 	if err != nil {
-		// TODO: ERROR
+		return
 	}
-	fmt.Println(hand2.Cards.ToString())
-	err = hand2.Evaluate()
-	fmt.Println(hand2.BestHand.ToString(), hand2.BestHandType)
+	fmt.Println("Hand 2: " + hand2.Cards.ToString())
+	hand2.Evaluate()
+
+	CompareHands(hand1, hand2)
 
 }

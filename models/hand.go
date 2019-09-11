@@ -1,6 +1,26 @@
 package models
 
+import (
+	"errors"
+)
+
+var ErrHandsAreEquivalent = errors.New("hands are equivalent")
+
 type HandType int
+
+const (
+	UnknownHandType HandType = iota
+	HighCard
+	OnePair
+	TwoPair
+	ThreeOfAKind
+	Straight
+	Flush
+	FullHouse
+	FourOfAKind
+	StraightFlush
+	RoyalFlush
+)
 
 type Hand struct {
 	Cards        Cards    `json:"cards"`
@@ -16,102 +36,53 @@ func NewHand(cards Cards) Hand {
 	}
 }
 
-const (
-	UnknownHandType = iota
-	HighCard
-	OnePair
-	TwoPair
-	ThreeOfAKind
-	Straight
-	Flush
-	FullHouse
-	FourOfAKind
-	StraightFlush
-	RoyalFlush
-)
-
-func (h *Hand) updateBestHand(newHandType HandType, hand Cards) {
-	if newHandType > h.BestHandType {
-		h.BestHandType = newHandType
-		h.BestHand = hand
+func (h1 Hand) IsBetterThan(h2 Hand) (bool, error) {
+	if h1.BestHandType > h2.BestHandType {
+		return true, nil
+	} else if h1.BestHandType < h2.BestHandType {
+		return false, nil
+	} else {
+		// Equvalent Type
+		switch h1.BestHandType {
+		case HighCard:
+			fallthrough
+		case OnePair:
+			fallthrough
+		case ThreeOfAKind:
+			fallthrough
+		case FourOfAKind:
+			if h1.BestHand[0].Value == h2.BestHand[0].Value {
+				return false, ErrHandsAreEquivalent
+			}
+			return h1.BestHand[0].Value > h2.BestHand[0].Value, nil
+		}
+		return false, ErrHandsAreEquivalent
 	}
 }
 
-func (h *Hand) Evaluate() error {
-	// Check for cards with matching suits
-	if ok, matchingSuits := h.Cards.hasMatchingSuit(); ok {
-		h.updateBestHand(Flush, matchingSuits)
+func (h HandType) ToString() string {
+	switch h {
+	case HighCard:
+		return "High Card"
+	case OnePair:
+		return "One Pair"
+	case TwoPair:
+		return "Two Pair"
+	case ThreeOfAKind:
+		return "Three Of A Kind"
+	case Straight:
+		return "Straight"
+	case Flush:
+		return "Flush"
+	case FullHouse:
+		return "Full House"
+	case FourOfAKind:
+		return "Four Of A Kind"
+	case StraightFlush:
+		return "Straight Flush"
+	case RoyalFlush:
+		return "Royal Flush"
+	default:
+		return "Unknown"
 	}
-
-	// Check for cards in sequence
-	if ok, sequentialCards := h.Cards.hasSequence(); ok {
-		isRoyal := false
-		isFlush := false
-		// Check if royal (ie: Last card is King)
-		if h.Cards[len(h.Cards)-1].Value == King {
-			isRoyal = true
-		}
-
-		// check if flush
-		if h.BestHandType == Flush {
-			isFlush = true
-		}
-
-		// assign accordingly
-		if isRoyal && isFlush {
-			h.updateBestHand(RoyalFlush, sequentialCards)
-			return nil
-		} else if isFlush {
-			h.updateBestHand(StraightFlush, sequentialCards)
-			return nil
-		} else {
-			h.updateBestHand(Straight, sequentialCards)
-		}
-
-	}
-
-	// Check for Cards with matching Values
-	if ok, matchingCards := h.Cards.hasMatchingValues(); ok {
-		switch len(matchingCards) {
-		case 2: // One or more sets of matching cards
-			{
-				c1 := matchingCards[0]
-				c2 := matchingCards[1]
-
-				if len(c1) == 2 && len(c2) == 2 {
-					h.updateBestHand(TwoPair, append(c1, c2...))
-
-				} else {
-					// Must be full house
-					h.updateBestHand(FullHouse, append(c1, c2...))
-				}
-				break
-			}
-		case 1: // Only one set of matching cards
-			{
-				cards := matchingCards[0]
-				switch len(cards) {
-				case 2:
-					{
-						h.updateBestHand(OnePair, cards)
-					}
-				case 3:
-					{
-						h.updateBestHand(ThreeOfAKind, cards)
-					}
-				case 4:
-					{
-						h.updateBestHand(FourOfAKind, cards)
-					}
-				}
-			}
-		}
-		// Always Better Than High Card
-		return nil
-	}
-	if ok, highCard := h.Cards.hasHighCard(); ok {
-		h.updateBestHand(HighCard, Cards{highCard})
-		return nil
-	}
-	return nil
 }
