@@ -109,8 +109,8 @@ func (h *Hand) Evaluate() error {
 		// Always Better Than High Card
 		return nil
 	}
-	if ok, cards := h.Cards.hasHighCard(); ok {
-		h.updateBestHand(HighCard, cards)
+	if ok, highCard := h.Cards.hasHighCard(); ok {
+		h.updateBestHand(HighCard, Cards{highCard})
 		return nil
 	}
 	return nil

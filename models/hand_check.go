@@ -24,14 +24,17 @@ func (cs Cards) hasMatchingValues() (bool, []Cards) {
 	return matchingValueCards != nil, matchingValueCards
 }
 
-func (cs Cards) hasHighCard() (bool, Cards) {
+func (cs Cards) hasHighCard() (bool, *Card) {
+	if len(cs) == 0 {
+		return false, nil
+	}
 	var maxCard *Card
 	for _, card := range cs {
 		if maxCard == nil || card.Value > maxCard.Value {
 			maxCard = card
 		}
 	}
-	return true, Cards{maxCard}
+	return true, maxCard
 }
 
 func (cs Cards) hasMatchingSuit() (bool, Cards) {

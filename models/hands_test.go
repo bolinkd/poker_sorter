@@ -1,6 +1,6 @@
 package models
 
-var Cards_FourOfAKind = Cards{
+var cards_FourOfAKind = Cards{
 	&Card{
 		Value: One,
 		Suit:  Spade,
@@ -23,7 +23,7 @@ var Cards_FourOfAKind = Cards{
 	},
 }
 
-var Cards_TwoPair = Cards{
+var cards_TwoPair = Cards{
 	&Card{
 		Value: One,
 		Suit:  Spade,
@@ -46,7 +46,7 @@ var Cards_TwoPair = Cards{
 	},
 }
 
-var Cards_NoPairs = Cards{
+var cards_NoPairs = Cards{
 	&Card{
 		Value: One,
 		Suit:  Spade,
@@ -68,3 +68,20 @@ var Cards_NoPairs = Cards{
 		Suit:  Club,
 	},
 }
+
+var cards_ValidHighCard = Cards{
+	&Card{
+		Value: Five,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: King,
+		Suit:  Spade,
+	},
+	&Card{
+		Value: Six,
+		Suit:  Diamond,
+	},
+}
+
+var cards_InvalidHighCard = Cards{}
