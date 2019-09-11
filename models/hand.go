@@ -60,10 +60,10 @@ func (h *Hand) Evaluate() error {
 		// assign accordingly
 		if isRoyal && isFlush {
 			h.updateBestHand(RoyalFlush, sequentialCards)
-			return
+			return nil
 		} else if isFlush {
 			h.updateBestHand(StraightFlush, sequentialCards)
-			return
+			return nil
 		} else {
 			h.updateBestHand(Straight, sequentialCards)
 		}

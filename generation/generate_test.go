@@ -22,6 +22,6 @@ func TestHandGeneration(t *testing.T) {
 
 	hand, err := GetHand(&deck)
 
-	assert.Equal(len(hand), 5, "Hand should contain 5 cards")
+	assert.Equal(len(hand.Cards), 5, "Hand should contain 5 cards")
 	assert.NoError(err, "Should return a successful hand draw")
 }
