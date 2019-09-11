@@ -14,7 +14,7 @@ func (c *Card) toString() string {
 func (cs Cards) ToString() string {
 	rtn := ""
 	for _, card := range cs {
-		rtn += card.toString() + "\n"
+		rtn += card.toString() + ", "
 	}
-	return rtn
+	return rtn[:len(rtn)-2] + "\n"
 }

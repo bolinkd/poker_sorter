@@ -2,19 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/bolinkd/poker_sorter/models"
+	"github.com/bolinkd/poker_sorter/generation"
 )
 
 func main() {
-	cards := models.Cards{}
-	for suit := models.Heart; suit <= models.Spade; suit++ {
-		for value := models.One; value <= models.King; value++ {
-			cards = append(cards, &models.Card{
-				Suit:  suit,
-				Value: value,
-			})
-		}
-	}
+	deck := generation.GenerateDeck()
+	fmt.Println(deck.ToString())
 
-	fmt.Println(cards.ToString())
+	hand, err := generation.GetHand(&deck)
+	if err != nil {
+		// TODO: ERROR
+	}
+	fmt.Println(hand.ToString())
+
 }
