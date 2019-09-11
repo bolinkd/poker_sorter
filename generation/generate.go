@@ -53,7 +53,6 @@ func getRandomNumbers(count int, min int, max int) []int {
 			indexes = append(indexes, newIndex)
 		}
 	}
-	// List numbers in descending order
 	return indexes
 }
 

@@ -36,6 +36,36 @@ func NewHand(cards Cards) Hand {
 	}
 }
 
+func compareMaxValues(c1 Cards, c2 Cards) (bool, error) {
+	maxC1 := c1[0].Value
+	for _, card := range c1[1:] {
+		if card.Value > maxC1 {
+			maxC1 = card.Value
+		}
+	}
+
+	maxC2 := c2[0].Value
+	for _, card := range c2[1:] {
+		if card.Value > maxC2 {
+			maxC2 = card.Value
+		}
+	}
+	if maxC1 > maxC2 {
+		return true, nil
+	} else if maxC2 > maxC1 {
+		return false, nil
+	} else {
+		return false, ErrHandsAreEquivalent
+	}
+}
+
+func compareMatchingValues(c1 Cards, c2 Cards) (bool, error) {
+	if c1[0].Value == c2[0].Value {
+		return false, ErrHandsAreEquivalent
+	}
+	return c1[0].Value > c2[0].Value, nil
+}
+
 func (h1 Hand) IsBetterThan(h2 Hand) (bool, error) {
 	if h1.BestHandType > h2.BestHandType {
 		return true, nil
@@ -51,12 +81,21 @@ func (h1 Hand) IsBetterThan(h2 Hand) (bool, error) {
 		case ThreeOfAKind:
 			fallthrough
 		case FourOfAKind:
-			if h1.BestHand[0].Value == h2.BestHand[0].Value {
-				return false, ErrHandsAreEquivalent
-			}
-			return h1.BestHand[0].Value > h2.BestHand[0].Value, nil
+			return compareMatchingValues(h1.BestHand, h2.BestHand)
+		case TwoPair:
+			fallthrough
+		case Straight:
+			fallthrough
+		case StraightFlush:
+			fallthrough
+		case Flush:
+			fallthrough
+		case FullHouse:
+			return compareMaxValues(h1.BestHand, h2.BestHand)
+			// Royal Flush (has to be the same)
+		default:
+			return false, ErrHandsAreEquivalent
 		}
-		return false, ErrHandsAreEquivalent
 	}
 }
 

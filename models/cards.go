@@ -7,5 +7,5 @@ func (cs Cards) ToString() string {
 	for _, card := range cs {
 		rtn += card.toString() + ", "
 	}
-	return rtn[:len(rtn)-2] + "\n"
+	return rtn[:len(rtn)-2]
 }

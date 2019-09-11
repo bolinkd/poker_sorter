@@ -39,4 +39,7 @@ func main() {
 
 	CompareHands(hand1, hand2)
 
+	fmt.Println("Hand 1 Relevent Cards: ", hand1.BestHand.ToString())
+	fmt.Println("Hand 2 Relevent Cards: ", hand2.BestHand.ToString())
+
 }
