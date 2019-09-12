@@ -245,3 +245,49 @@ var Cards_LowStraight = Cards{
 		Suit:  Heart,
 	},
 }
+
+var Cards_MatchingPair1 = Cards{
+	&Card{
+		Value: Ace,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Ace,
+		Suit:  Club,
+	},
+	&Card{
+		Value: Three,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Four,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Five,
+		Suit:  Heart,
+	},
+}
+
+var Cards_MatchingPair2 = Cards{
+	&Card{
+		Value: Ace,
+		Suit:  Diamond,
+	},
+	&Card{
+		Value: Ace,
+		Suit:  Spade,
+	},
+	&Card{
+		Value: Six,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Four,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Five,
+		Suit:  Heart,
+	},
+}

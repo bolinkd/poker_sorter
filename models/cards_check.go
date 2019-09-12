@@ -56,7 +56,7 @@ func (cs Cards) groupHighCards() (Hands, bool) {
 	return possibleHands, len(possibleHands) != 0
 }
 
-func (cs Cards) groupPossibleStraights() (Hands, bool) {
+func (cs Cards) groupSequences() (Hands, bool) {
 	// TODO: Expand for more than 5 cards
 	// TODO: Check for Ace as Low
 	prevCard := cs[0]
@@ -101,20 +101,26 @@ func (cs Cards) groupPossibleStraights() (Hands, bool) {
 	return hands, true
 }
 
-/*
-func (cs Cards) hasMatchingSuit() (bool, Cards) {
-	suit := cs[0].Suit
-	for _, card := range cs[1:] {
-		if card.Suit != suit {
-			return false, nil
+func (cs Cards) groupMatchingSuits() (Hands, bool) {
+	// TODO: Expand for more than 5 cards
+	suitMap := make(map[Suit]Cards)
+	hands := make(Hands, 0)
+	for _, card := range cs {
+		if suitMap[card.Suit] == nil {
+			suitMap[card.Suit] = Cards{card}
+		} else {
+			suitMap[card.Suit] = append(suitMap[card.Suit], card)
 		}
 	}
-	return true, cs
+
+	for _, suitCards := range suitMap {
+		if len(suitCards) == 5 {
+			hands = append(hands, &Hand{
+				BestHandType:  Flush,
+				RelevantCards: suitCards,
+			})
+		}
+	}
+
+	return hands, len(hands) != 0
 }
-
-func (cs Cards) hasSequence() (bool, Cards) {
-
-
-}
-
-*/

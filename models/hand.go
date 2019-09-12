@@ -50,8 +50,8 @@ func (h HandType) ToString() string {
 	}
 }
 
-func (h *Hand) toString() string {
-	return h.BestHandType.ToString() + ": " + h.RelevantCards.ToString()
+func (h *Hand) ToString() string {
+	return h.BestHandType.ToString() + ": (" + h.RelevantCards.ToString() + ")"
 }
 
 func (hs Hands) ToString() string {
@@ -60,7 +60,7 @@ func (hs Hands) ToString() string {
 		return rtn
 	}
 	for _, card := range hs {
-		rtn += card.toString() + ", "
+		rtn += card.ToString() + "\n"
 	}
 	return rtn[:len(rtn)-2]
 }
