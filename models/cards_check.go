@@ -56,6 +56,51 @@ func (cs Cards) groupHighCards() (Hands, bool) {
 	return possibleHands, len(possibleHands) != 0
 }
 
+func (cs Cards) groupPossibleStraights() (Hands, bool) {
+	// TODO: Expand for more than 5 cards
+	// TODO: Check for Ace as Low
+	prevCard := cs[0]
+	hands := make(Hands, 0)
+	for _, card := range cs[1:] {
+		if card.Value == prevCard.Value-1 {
+			prevCard = card
+		} else {
+			return hands, false
+		}
+	}
+	hand := &Hand{
+		BestHandType:  Straight,
+		RelevantCards: cs,
+	}
+	hands = append(hands, hand)
+
+	// Check straight flush
+	isFlush := true
+	suit := hand.RelevantCards[0].Suit
+	for _, card := range hands[0].RelevantCards[1:] {
+		if card.Suit != suit {
+			isFlush = false
+			break
+		}
+	}
+
+	// Check royal flush
+	isRoyal := hand.RelevantCards[0].Value == Ace
+	if isFlush {
+		hands = append(hands, &Hand{
+			RelevantCards: hand.RelevantCards,
+			BestHandType:  StraightFlush,
+		})
+	}
+	if isFlush && isRoyal {
+		hands = append(hands, &Hand{
+			RelevantCards: hand.RelevantCards,
+			BestHandType:  RoyalFlush,
+		})
+	}
+	return hands, true
+}
+
 /*
 func (cs Cards) hasMatchingSuit() (bool, Cards) {
 	suit := cs[0].Suit
@@ -68,30 +113,8 @@ func (cs Cards) hasMatchingSuit() (bool, Cards) {
 }
 
 func (cs Cards) hasSequence() (bool, Cards) {
-	sort.SliceStable(cs, func(i, j int) bool {
-		return cs[i].Value < cs[j].Value
-	})
 
-	seqVal := cs[0].Value
-	cardList := cs[1:]
 
-	// If there is a two and an Ace it can count as a straight
-	// TODO: Currently not working
-	/*
-		if seqVal == Two && cs[len(cs)-1].Value == Ace {
-			cardList = cs[1 : len(cs)-1]
-			cs = append(Cards{cs[len(cs)-1]}, cs[1:]...)
-		}
-*/
-/*
-	for _, card := range cardList {
-		if card.Value == seqVal+1 {
-			seqVal++
-		} else {
-			return false, Cards{}
-		}
-	}
-	return true, cs
 }
 
 */

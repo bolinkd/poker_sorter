@@ -30,7 +30,7 @@ func main() {
 		return
 	}
 
-	hand1 = models.Cards_FullHouse
+	hand1 = models.Cards_RoyalFlush
 	fmt.Println("Hand 1: " + hand1.ToString())
 	hand1.GetPossibleHands()
 

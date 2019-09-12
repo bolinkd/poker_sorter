@@ -5,7 +5,7 @@ import "strconv"
 type Value int
 
 const (
-	UnknownValue Value = iota
+	UnknownValue Value = iota + 1
 	Two
 	Three
 	Four
