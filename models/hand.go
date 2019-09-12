@@ -1,11 +1,5 @@
 package models
 
-import (
-	"errors"
-)
-
-var ErrHandsAreEquivalent = errors.New("hands are equivalent")
-
 type HandType int
 
 const (
@@ -23,81 +17,11 @@ const (
 )
 
 type Hand struct {
-	Cards        Cards    `json:"cards"`
-	BestHand     Cards    `json:"best_cards"`
-	BestHandType HandType `json:"hand_type"`
+	RelevantCards Cards    `json:"best_cards"`
+	BestHandType  HandType `json:"hand_type"`
 }
 
-func NewHand(cards Cards) Hand {
-	return Hand{
-		Cards:        cards,
-		BestHand:     make(Cards, 0),
-		BestHandType: UnknownHandType,
-	}
-}
-
-func compareMaxValues(c1 Cards, c2 Cards) (bool, error) {
-	maxC1 := c1[0].Value
-	for _, card := range c1[1:] {
-		if card.Value > maxC1 {
-			maxC1 = card.Value
-		}
-	}
-
-	maxC2 := c2[0].Value
-	for _, card := range c2[1:] {
-		if card.Value > maxC2 {
-			maxC2 = card.Value
-		}
-	}
-	if maxC1 > maxC2 {
-		return true, nil
-	} else if maxC2 > maxC1 {
-		return false, nil
-	} else {
-		return false, ErrHandsAreEquivalent
-	}
-}
-
-func compareMatchingValues(c1 Cards, c2 Cards) (bool, error) {
-	if c1[0].Value == c2[0].Value {
-		return false, ErrHandsAreEquivalent
-	}
-	return c1[0].Value > c2[0].Value, nil
-}
-
-func (h1 Hand) IsBetterThan(h2 Hand) (bool, error) {
-	if h1.BestHandType > h2.BestHandType {
-		return true, nil
-	} else if h1.BestHandType < h2.BestHandType {
-		return false, nil
-	} else {
-		// Equvalent Type
-		switch h1.BestHandType {
-		case HighCard:
-			fallthrough
-		case OnePair:
-			fallthrough
-		case ThreeOfAKind:
-			fallthrough
-		case FourOfAKind:
-			return compareMatchingValues(h1.BestHand, h2.BestHand)
-		case TwoPair:
-			fallthrough
-		case Straight:
-			fallthrough
-		case StraightFlush:
-			fallthrough
-		case Flush:
-			fallthrough
-		case FullHouse:
-			return compareMaxValues(h1.BestHand, h2.BestHand)
-			// Royal Flush (has to be the same)
-		default:
-			return false, ErrHandsAreEquivalent
-		}
-	}
-}
+type Hands []*Hand
 
 func (h HandType) ToString() string {
 	switch h {
@@ -124,4 +48,19 @@ func (h HandType) ToString() string {
 	default:
 		return "Unknown"
 	}
+}
+
+func (h *Hand) toString() string {
+	return h.BestHandType.ToString() + ": " + h.RelevantCards.ToString()
+}
+
+func (hs Hands) ToString() string {
+	rtn := ""
+	if len(hs) == 0 {
+		return rtn
+	}
+	for _, card := range hs {
+		rtn += card.toString() + ", "
+	}
+	return rtn[:len(rtn)-2]
 }

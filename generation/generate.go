@@ -42,7 +42,7 @@ func getRandomNumber(min int, max int) int {
 }
 
 func getRandomNumbers(count int, min int, max int) []int {
-	indexes := []int{}
+	indexes := make([]int, 0)
 	for len(indexes) < count {
 		newIndex := getRandomNumber(min, max)
 		if !valueInSlice(newIndex, indexes) {
@@ -52,11 +52,11 @@ func getRandomNumbers(count int, min int, max int) []int {
 	return indexes
 }
 
-func GetHand(deck *models.Cards) (models.Hand, error) {
+func GetHand(deck *models.Cards) (models.Cards, error) {
 	indexes := getRandomNumbers(5, 0, len(*deck)-1)
 	cards := models.Cards{}
 	for _, idx := range indexes {
 		cards = append(cards, (*deck)[idx])
 	}
-	return models.NewHand(cards), nil
+	return cards, nil
 }

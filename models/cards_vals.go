@@ -1,6 +1,6 @@
 package models
 
-var cards_FourOfAKind = Cards{
+var Cards_FourOfAKind = Cards{
 	&Card{
 		Value: Ace,
 		Suit:  Spade,
@@ -23,7 +23,7 @@ var cards_FourOfAKind = Cards{
 	},
 }
 
-var cards_TwoPair = Cards{
+var Cards_TwoPair = Cards{
 	&Card{
 		Value: Ace,
 		Suit:  Spade,
@@ -46,7 +46,7 @@ var cards_TwoPair = Cards{
 	},
 }
 
-var cards_NoPairs = Cards{
+var Cards_NoPairs = Cards{
 	&Card{
 		Value: Ace,
 		Suit:  Spade,
@@ -69,7 +69,7 @@ var cards_NoPairs = Cards{
 	},
 }
 
-var cards_ValidMatchingSuits = Cards{
+var Cards_ValidMatchingSuits = Cards{
 	&Card{
 		Value: Six,
 		Suit:  Heart,
@@ -91,7 +91,7 @@ var cards_ValidMatchingSuits = Cards{
 		Suit:  Heart,
 	}}
 
-var cards_MatchingSuitsMissingOne = Cards{
+var Cards_MatchingSuitsMissingOne = Cards{
 	&Card{
 		Value: Six,
 		Suit:  Heart,
@@ -114,7 +114,7 @@ var cards_MatchingSuitsMissingOne = Cards{
 	},
 }
 
-var cards_ValidHighCard = Cards{
+var Cards_ValidHighCard = Cards{
 	&Card{
 		Value: Five,
 		Suit:  Heart,
@@ -129,9 +129,9 @@ var cards_ValidHighCard = Cards{
 	},
 }
 
-var cards_InvalidHighCard = Cards{}
+var Cards_InvalidHighCard = Cards{}
 
-var cards_SequenceValid = Cards{
+var Cards_SequenceValid = Cards{
 	&Card{
 		Value: Six,
 		Suit:  Heart,
@@ -154,7 +154,7 @@ var cards_SequenceValid = Cards{
 	},
 }
 
-var cards_SequenceInvalid = Cards{
+var Cards_SequenceInvalid = Cards{
 	&Card{
 		Value: Six,
 		Suit:  Heart,
@@ -177,7 +177,7 @@ var cards_SequenceInvalid = Cards{
 	},
 }
 
-var cards_FullHouse = Cards{
+var Cards_FullHouse = Cards{
 	&Card{
 		Value: Six,
 		Suit:  Heart,
@@ -200,7 +200,7 @@ var cards_FullHouse = Cards{
 	},
 }
 
-var cards_RoyalFlush = Cards{
+var Cards_RoyalFlush = Cards{
 	&Card{
 		Value: Ten,
 		Suit:  Heart,
@@ -223,7 +223,7 @@ var cards_RoyalFlush = Cards{
 	},
 }
 
-var cards_LowStraight = Cards{
+var Cards_LowStraight = Cards{
 	&Card{
 		Value: Ace,
 		Suit:  Diamond,

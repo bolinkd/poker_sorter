@@ -1,10 +1,6 @@
 package models
 
-import (
-	"sort"
-)
-
-func (cs Cards) hasMatchingValues() (bool, []Cards) {
+func (cs Cards) groupMatchingValues() (Hands, bool) {
 	cardMap := make(map[Value]Cards)
 	for _, card := range cs {
 		if cardMap[card.Value] == nil {
@@ -14,16 +10,42 @@ func (cs Cards) hasMatchingValues() (bool, []Cards) {
 		}
 	}
 
-	var matchingValueCards []Cards
-	for _, cards := range cardMap {
-		if len(cards) >= 2 {
-			matchingValueCards = append(matchingValueCards, cards)
+	possibleHands := make(Hands, 0)
+	for _, matchingCards := range cardMap {
+		hand := Hand{RelevantCards: matchingCards}
+		switch len(matchingCards) {
+		case 2:
+			hand.BestHandType = OnePair
+		case 3:
+			hand.BestHandType = ThreeOfAKind
+		case 4:
+			hand.BestHandType = FourOfAKind
+		default:
+			break
+		}
+		if hand.BestHandType != UnknownHandType {
+			possibleHands = append(possibleHands, &hand)
 		}
 	}
 
-	return matchingValueCards != nil, matchingValueCards
+	// Check for two pairs and full house
+	if len(possibleHands) >= 2 {
+		for i, hand := range possibleHands[:len(possibleHands)-1] {
+			prevHand := possibleHands[i+1]
+			newHand := Hand{RelevantCards: append(hand.RelevantCards, prevHand.RelevantCards...)}
+			if hand.BestHandType == OnePair && prevHand.BestHandType == OnePair {
+				newHand.BestHandType = TwoPair
+			} else if (hand.BestHandType == ThreeOfAKind && prevHand.BestHandType == OnePair) || (hand.BestHandType == OnePair && prevHand.BestHandType == ThreeOfAKind) {
+				newHand.BestHandType = FullHouse
+			}
+			possibleHands = append(possibleHands, &newHand)
+		}
+	}
+
+	return possibleHands, len(possibleHands) != 0
 }
 
+/*
 func (cs Cards) hasHighCard() (bool, *Card) {
 	if len(cs) == 0 {
 		return false, nil
@@ -62,8 +84,8 @@ func (cs Cards) hasSequence() (bool, Cards) {
 			cardList = cs[1 : len(cs)-1]
 			cs = append(Cards{cs[len(cs)-1]}, cs[1:]...)
 		}
-	*/
-
+*/
+/*
 	for _, card := range cardList {
 		if card.Value == seqVal+1 {
 			seqVal++
@@ -73,3 +95,5 @@ func (cs Cards) hasSequence() (bool, Cards) {
 	}
 	return true, cs
 }
+
+*/

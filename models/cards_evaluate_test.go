@@ -1,10 +1,6 @@
 package models
 
-import (
-	"github.com/stretchr/testify/assert"
-	"testing"
-)
-
+/*
 func TestHand_Evaluate_FourOfAKind(t *testing.T) {
 	assert := assert.New(t)
 	hand := Hand(hand_FourOfAKind)
@@ -36,3 +32,4 @@ func TestHand_Evaluate_RoyalFlush(t *testing.T) {
 	assert.Equal(hand.BestHandType, RoyalFlush, "Should return a royal flush")
 	assert.Equal(len(hand.BestHand), 5, "Should return 5 cards")
 }
+*/
