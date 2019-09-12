@@ -7,7 +7,7 @@ import (
 	"github.com/bolinkd/poker_sorter/models"
 )
 
-func ComparePossibleHands(possibleHands1 models.Hands, possibleHands2 models.Hands) {
+func comparePossibleHands(possibleHands1 models.Hands, possibleHands2 models.Hands) {
 	for i, hand1 := range possibleHands1 {
 		if i > len(possibleHands2) {
 			fmt.Printf("Hand 1's %v Beats Hand 2's %v\n", hand1.ToString(), possibleHands2[len(possibleHands2)-1].ToString())
@@ -35,12 +35,15 @@ func ComparePossibleHands(possibleHands1 models.Hands, possibleHands2 models.Han
 }
 
 func CompareHands(hand1 models.Hand, hand2 models.Hand) (bool, error) {
+
 	if hand1.BestHandType != hand2.BestHandType {
 		return hand1.BestHandType > hand2.BestHandType, nil
 	}
 
-	if hand1.RelevantCards[0].Value != hand2.RelevantCards[0].Value {
-		return hand1.RelevantCards[0].Value > hand2.RelevantCards[0].Value, nil
+	if hand1.BestHandType == models.HighCard {
+		if hand1.RelevantCards[0].Value != hand2.RelevantCards[0].Value {
+			return hand1.RelevantCards[0].Value > hand2.RelevantCards[0].Value, nil
+		}
 	}
 
 	return false, errors.New("hands are the same")
@@ -53,7 +56,7 @@ func main() {
 	if err != nil {
 		return
 	}
-	// hand1 = models.Cards_MatchingPair1
+	hand1 = models.Cards_MatchingPair1
 	fmt.Println("Hand 1: " + hand1.ToString())
 	possibleHands1 := hand1.GetPossibleHands()
 
@@ -61,9 +64,13 @@ func main() {
 	if err != nil {
 		return
 	}
-	// hand2 = models.Cards_MatchingPair2
+	hand2 = models.Cards_MatchingPair2
 	fmt.Println("Hand 2: " + hand2.ToString())
 	possibleHands2 := hand2.GetPossibleHands()
 
-	ComparePossibleHands(possibleHands1, possibleHands2)
+	fmt.Println("---------------------------------------------------------------------")
+
+	comparePossibleHands(possibleHands1, possibleHands2)
+
+	fmt.Println("---------------------------------------------------------------------")
 }

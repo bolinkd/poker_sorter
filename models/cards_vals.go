@@ -249,23 +249,23 @@ var Cards_LowStraight = Cards{
 //Hand 1: 6♣, 4♥, K♠, 5♣, 10♠
 var Cards_MatchingPair1 = Cards{
 	&Card{
-		Value: Six,
-		Suit:  Club,
-	},
-	&Card{
-		Value: Four,
-		Suit:  Heart,
-	},
-	&Card{
-		Value: King,
-		Suit:  Spade,
-	},
-	&Card{
-		Value: Five,
+		Value: Ten,
 		Suit:  Club,
 	},
 	&Card{
 		Value: Ten,
+		Suit:  Heart,
+	},
+	&Card{
+		Value: Eight,
+		Suit:  Spade,
+	},
+	&Card{
+		Value: Eight,
+		Suit:  Club,
+	},
+	&Card{
+		Value: Three,
 		Suit:  Spade,
 	},
 }
@@ -277,19 +277,19 @@ var Cards_MatchingPair2 = Cards{
 		Suit:  Diamond,
 	},
 	&Card{
-		Value: Three,
+		Value: Ten,
 		Suit:  Heart,
 	},
 	&Card{
-		Value: King,
+		Value: Eight,
 		Suit:  Spade,
 	},
 	&Card{
-		Value: Four,
+		Value: Six,
 		Suit:  Spade,
 	},
 	&Card{
-		Value: Five,
+		Value: Eight,
 		Suit:  Diamond,
 	},
 }
