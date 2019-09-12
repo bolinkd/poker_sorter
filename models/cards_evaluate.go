@@ -1,9 +1,18 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func (cs *Cards) GetPossibleHands() Hands {
+	// Sort by value
+	sort.SliceStable(*cs, func(i int, j int) bool {
+		return (*cs)[i].Value > (*cs)[j].Value
+	})
+
 	// Check for cards with matching suits
+	allHands := make(Hands, 0)
 	// TODO: Sequences and Flushes
 	/*
 		if ok, matchingSuits := cs.getMatchingSuits(); ok {
@@ -39,14 +48,17 @@ func (cs *Cards) GetPossibleHands() Hands {
 
 	// Check for Cards with matching Values
 	if possibleHands, ok := cs.groupMatchingValues(); ok {
-		fmt.Println(possibleHands.ToString())
+		allHands = append(allHands, possibleHands...)
 	}
-	/*
-		// Check what high card is
-		if ok, highCard := h.Cards.hasHighCard(); ok {
-			h.updateBestHand(HighCard, Cards{highCard})
-			return
-		}
-	*/
-	return nil
+
+	if possibleHands, ok := cs.groupHighCards(); ok {
+		allHands = append(allHands, possibleHands...)
+	}
+
+	sort.SliceStable(allHands, func(i int, j int) bool {
+		return allHands[i].BestHandType > allHands[j].BestHandType
+	})
+
+	fmt.Println(allHands.ToString())
+	return allHands
 }

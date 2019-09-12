@@ -45,20 +45,18 @@ func (cs Cards) groupMatchingValues() (Hands, bool) {
 	return possibleHands, len(possibleHands) != 0
 }
 
-/*
-func (cs Cards) hasHighCard() (bool, *Card) {
-	if len(cs) == 0 {
-		return false, nil
-	}
-	var maxCard *Card
+func (cs Cards) groupHighCards() (Hands, bool) {
+	possibleHands := make(Hands, 0)
 	for _, card := range cs {
-		if maxCard == nil || card.Value > maxCard.Value {
-			maxCard = card
-		}
+		possibleHands = append(possibleHands, &Hand{
+			BestHandType:  HighCard,
+			RelevantCards: Cards{card},
+		})
 	}
-	return true, maxCard
+	return possibleHands, len(possibleHands) != 0
 }
 
+/*
 func (cs Cards) hasMatchingSuit() (bool, Cards) {
 	suit := cs[0].Suit
 	for _, card := range cs[1:] {
