@@ -19,7 +19,6 @@ func ComparePossibleHands(possibleHands1 models.Hands, possibleHands2 models.Han
 		if err == nil {
 			if isGreater {
 				fmt.Printf("Hand 1's %v Beats Hand 2's %v\n", hand1.ToString(), hand2.ToString())
-
 			} else {
 				fmt.Printf("Hand 2's %v Beats Hand 1's %v\n", hand2.ToString(), hand1.ToString())
 			}
@@ -41,7 +40,7 @@ func CompareHands(hand1 models.Hand, hand2 models.Hand) (bool, error) {
 	}
 
 	if hand1.RelevantCards[0].Value != hand2.RelevantCards[0].Value {
-		return hand1.RelevantCards[0].Value == hand2.RelevantCards[0].Value, nil
+		return hand1.RelevantCards[0].Value > hand2.RelevantCards[0].Value, nil
 	}
 
 	return false, errors.New("hands are the same")
@@ -54,7 +53,6 @@ func main() {
 	if err != nil {
 		return
 	}
-
 	// hand1 = models.Cards_MatchingPair1
 	fmt.Println("Hand 1: " + hand1.ToString())
 	possibleHands1 := hand1.GetPossibleHands()
