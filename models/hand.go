@@ -1,5 +1,7 @@
 package models
 
+import "sort"
+
 type HandType int
 
 const (
@@ -52,6 +54,21 @@ func (h HandType) ToString() string {
 
 func (h *Hand) ToString() string {
 	return h.BestHandType.ToString() + ": (" + h.RelevantCards.ToString() + ")"
+}
+
+func (h *Hand) Compare(h2 *Hand) int {
+	if h.BestHandType != h2.BestHandType {
+		return int(h.BestHandType - h2.BestHandType)
+	}
+
+	sort.SliceStable(h.RelevantCards, func(i int, j int) bool {
+		return h.RelevantCards[i].Value < h.RelevantCards[j].Value
+	})
+	sort.SliceStable(h2.RelevantCards, func(i int, j int) bool {
+		return h.RelevantCards[i].Value < h.RelevantCards[j].Value
+	})
+
+	return h.RelevantCards[0].Compare(h2.RelevantCards[0])
 }
 
 func (hs Hands) ToString() string {
