@@ -62,10 +62,10 @@ func (h *Hand) Compare(h2 *Hand) int {
 	}
 
 	sort.SliceStable(h.RelevantCards, func(i int, j int) bool {
-		return h.RelevantCards[i].Value < h.RelevantCards[j].Value
+		return h.RelevantCards[i].Value > h.RelevantCards[j].Value
 	})
 	sort.SliceStable(h2.RelevantCards, func(i int, j int) bool {
-		return h.RelevantCards[i].Value < h.RelevantCards[j].Value
+		return h2.RelevantCards[i].Value > h2.RelevantCards[j].Value
 	})
 
 	return h.RelevantCards[0].Compare(h2.RelevantCards[0])
