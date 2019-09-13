@@ -53,7 +53,7 @@ func getRandomNumbers(count int, min int, max int) []int {
 }
 
 func GetHand(deck *models.Cards) (models.Cards, error) {
-	indexes := getRandomNumbers(5, 0, len(*deck)-1)
+	indexes := getRandomNumbers(15, 0, len(*deck)-1)
 	cards := models.Cards{}
 	for _, idx := range indexes {
 		cards = append(cards, (*deck)[idx])

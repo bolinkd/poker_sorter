@@ -265,7 +265,7 @@ var Cards_MatchingPair1 = Cards{
 		Suit:  Club,
 	},
 	&Card{
-		Value: Three,
+		Value: Eight,
 		Suit:  Spade,
 	},
 }
@@ -285,7 +285,7 @@ var Cards_MatchingPair2 = Cards{
 		Suit:  Spade,
 	},
 	&Card{
-		Value: Six,
+		Value: Ten,
 		Suit:  Spade,
 	},
 	&Card{
