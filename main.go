@@ -39,7 +39,7 @@ func main() {
 	if err != nil {
 		return
 	}
-	hand1 = models.Cards_MatchingPair1
+	// hand1 = models.Cards_MatchingPair1
 	fmt.Println("Hand 1: " + hand1.ToString())
 	possibleHands1 := hand1.GetPossibleHands()
 
@@ -47,7 +47,7 @@ func main() {
 	if err != nil {
 		return
 	}
-	hand2 = models.Cards_MatchingPair2
+	// hand2 = models.Cards_MatchingPair2
 	fmt.Println("Hand 2: " + hand2.ToString())
 	possibleHands2 := hand2.GetPossibleHands()
 
