@@ -28,35 +28,11 @@ func GenerateDeck() models.Cards {
 	return deck
 }
 
-func valueInSlice(val int, list []int) bool {
-	for _, item := range list {
-		if item == val {
-			return true
-		}
-	}
-	return false
-}
-
-func getRandomNumber(min int, max int) int {
-	return r.Intn(max-min+1) + min
-}
-
-func getRandomNumbers(count int, min int, max int) []int {
-	indexes := make([]int, 0)
-	for len(indexes) < count {
-		newIndex := getRandomNumber(min, max)
-		if !valueInSlice(newIndex, indexes) {
-			indexes = append(indexes, newIndex)
-		}
-	}
-	return indexes
+func Shuffle(cards *models.Cards) {
+	r.Shuffle(len(*cards), func(i, j int) { (*cards)[i], (*cards)[j] = (*cards)[j], (*cards)[i] })
 }
 
 func GetHand(deck *models.Cards) (models.Cards, error) {
-	indexes := getRandomNumbers(5, 0, len(*deck)-1)
-	cards := models.Cards{}
-	for _, idx := range indexes {
-		cards = append(cards, (*deck)[idx])
-	}
-	return cards, nil
+	Shuffle(deck)
+	return (*deck)[:5], nil
 }
